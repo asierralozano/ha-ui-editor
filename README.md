@@ -55,6 +55,10 @@ pip -r requirements.txt
 python homeassistant_ui_editor/bootstrap.py
 ```
 
+### Themes
+Here I'll try to post every theme available:
+* [Homekit UI Dark](https://github.com/asierralozano/homekit-ui) by Alberto Sierra Lozano
+
 ### TODOs
 There are still a lot of things to do! I'm trying to work as much as I can on this project, because I think 
 that it will make some people's life easier when tweaking their dashboard (starting by my father for example.)
