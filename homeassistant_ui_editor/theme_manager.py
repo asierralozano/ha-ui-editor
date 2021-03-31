@@ -23,7 +23,7 @@ class Theme(object):
     def card_types(self):
         card_types = list()
         for _file in os.listdir(self.theme_path):
-            if os.path.isfile(os.path.join(self.theme_path, _file)) or _file == "resources":
+            if os.path.isfile(os.path.join(self.theme_path, _file)) or _file == "ha-resources":
                 continue
             card_types.append(_file)
         return card_types
