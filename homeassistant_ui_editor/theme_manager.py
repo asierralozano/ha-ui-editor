@@ -5,8 +5,6 @@ import typing
 from homeassistant_ui_editor.settings import HomeAssistantUIEditorSettings
 from homeassistant_ui_editor.constants import SETTINGS_THEMES_PATH, THEME_SPEC_FILE_NAME, CARDS_EXTENSION
 
-SETTINGS = HomeAssistantUIEditorSettings()
-
 
 class Theme(object):
 
@@ -42,7 +40,10 @@ class Theme(object):
 
 
 class ThemeManager(object):
-    def __init__(self, themes_path=SETTINGS.get(SETTINGS_THEMES_PATH)):
+    def __init__(self, themes_path=None):
+        self._settings = HomeAssistantUIEditorSettings()
+        if not themes_path:
+            themes_path = self._settings.get(SETTINGS_THEMES_PATH)
         self._themes_path = themes_path
         self._loaded_themes = list()
 
