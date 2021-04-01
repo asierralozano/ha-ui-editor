@@ -29,7 +29,7 @@ variables:
 The card template code is written as a `yaml` file. This is the code that will be used to setup your Dashboard.  
 
 Let me show you a real example. From this graph here:
-![Salon Lights](docs/resources/salon.png)
+![Salon Lights](docs/resources/lights_graph_example.png)
 
 I've generated the following HA Dashboard  
 ![Salon dashboard](docs/resources/salon_dashboard.png)
