@@ -6,6 +6,7 @@ from homeassistant_ui_editor.ui.code_editor import QCodeEditor
 from homeassistant_ui_editor.settings import HomeAssistantUIEditorDialog
 # from example_auto_nodes import RootNode, Publish, setup_node_menu
 
+
 class HomeAssistantUIEditorGraph(NodeGraph):
 
     def __init__(self):
@@ -15,8 +16,13 @@ class HomeAssistantUIEditorGraph(NodeGraph):
         # self.add_node(RootNode())
         # setup_context_menu(self)
         # setup_node_menu(self, Publish)
+        self.use_OpenGL()
         self.setup_graph_menu()
         self.setup_node_menu(HomeAssistantVisualNode)
+        # self._connect_signals()
+
+    # def _connect_signals(self):
+    #     self.node_selected.connect(self._node_selected)
 
     def _create_edit_menu(self, root_menu):
         edit_menu = root_menu.add_menu('&Edit')

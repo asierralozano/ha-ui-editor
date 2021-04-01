@@ -4,7 +4,8 @@ import sys
 from Qt import QtWidgets
 
 from homeassistant_ui_editor.constants import SETTINGS_THEMES_PATH
-from homeassistant_ui_editor.graph import HomeAssistantUIEditorGraph
+# from homeassistant_ui_editor.graph import HomeAssistantUIEditorGraph
+from homeassistant_ui_editor.editor import HomeAssistantUIEditorWindow
 from homeassistant_ui_editor.register import register
 from homeassistant_ui_editor.settings import HomeAssistantUIEditorSettings
 
@@ -34,13 +35,14 @@ def start():
             return
         SETTINGS.set(SETTINGS_THEMES_PATH, themes_path)
 
-    graph = HomeAssistantUIEditorGraph()
-    graph.use_OpenGL()
+    editor = HomeAssistantUIEditorWindow()
+    editor.resize(1400, 700)
 
-    register(graph)
+    register(editor.graph)
 
-    graph_widget = graph.widget
-    graph_widget.show()
+    # graph_widget = graph.widget
+    # graph_widget.show()
+    editor.show()
 
     app.exec_()
 

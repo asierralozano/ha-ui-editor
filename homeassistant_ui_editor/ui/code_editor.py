@@ -51,16 +51,17 @@ class XMLHighlighter(QSyntaxHighlighter):
         xmlElementFormat = QTextCharFormat()
         xmlElementFormat.setForeground(QColor("#000070"))  # blue
         self.highlightingRules.append(
-            (QRegExp("\\b[A-Za-z0-9_]+(?=[\s/>])"), xmlElementFormat)
+            (QRegExp("\\b[A-Za-z_]+(?=[\s/>])"), xmlElementFormat)
         )
 
         xmlAttributeFormat = QTextCharFormat()
-        xmlAttributeFormat.setFontItalic(True)
-        xmlAttributeFormat.setForeground(QColor("#177317"))  # green
+        # xmlAttributeFormat.setFontItalic(True)
+        # xmlAttributeFormat.setFontWeight(QFont.Bold)
+        xmlAttributeFormat.setForeground(QColor("#F92672"))  # green
         self.highlightingRules.append(
-            (QRegExp("\\b[A-Za-z0-9_]+(?=\\=)"), xmlAttributeFormat)
+            (QRegExp("\\b[A-Za-z_]+(:)"), xmlAttributeFormat)
         )
-        self.highlightingRules.append((QRegExp("="), xmlAttributeFormat))
+        self.highlightingRules.append((QRegExp(":"), xmlAttributeFormat))
 
         self.valueFormat = QTextCharFormat()
         self.valueFormat.setForeground(QColor("#e35e00"))  # orange
@@ -70,7 +71,7 @@ class XMLHighlighter(QSyntaxHighlighter):
         singleLineCommentFormat = QTextCharFormat()
         singleLineCommentFormat.setForeground(QColor("#a0a0a4"))  # grey
         self.highlightingRules.append(
-            (QRegExp("<!--[^\n]*-->"), singleLineCommentFormat)
+            (QRegExp("#"), singleLineCommentFormat)
         )
 
         textFormat = QTextCharFormat()
@@ -216,7 +217,7 @@ class QCodeEditor(QPlainTextEdit):
         self,
         DISPLAY_LINE_NUMBERS=True,
         HIGHLIGHT_CURRENT_LINE=True,
-        SyntaxHighlighter=None,
+        # SyntaxHighlighter=None,
         *args
     ):
         """
@@ -246,8 +247,8 @@ class QCodeEditor(QPlainTextEdit):
             # self.currentLineColor = QColor("#e8e8e8")
             self.cursorPositionChanged.connect(self.highligtCurrentLine)
 
-        if SyntaxHighlighter is not None:  # add highlighter to textdocument
-            self.highlighter = SyntaxHighlighter(self.document())
+        # if SyntaxHighlighter is not None:  # add highlighter to textdocument
+        self.highlighter = XMLHighlighter(self.document())
 
     def resizeEvent(self, *e):
         """overload resizeEvent handler"""

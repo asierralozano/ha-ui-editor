@@ -4,13 +4,17 @@ import jinja2
 
 from .constants import SETTINGS_THEMES_PATH
 from .settings import HomeAssistantUIEditorSettings
+from .theme_manager import ThemeManager
+
 
 SETTINGS = HomeAssistantUIEditorSettings()
 
 
 def _render_jinja(template: str, theme: str, template_type: str, **context) -> str:
+    theme_manager = ThemeManager()
+    theme = theme_manager.load(theme)
     templates_path = os.path.join(
-        SETTINGS.get(SETTINGS_THEMES_PATH), theme, template_type, "templates"
+        theme.theme_path, template_type, "templates"
     )
     template_loader = jinja2.FileSystemLoader(searchpath=templates_path)
     template_env = jinja2.Environment(loader=template_loader)

@@ -6,6 +6,21 @@ from homeassistant_ui_editor import template as template_
 from homeassistant_ui_editor.constants import SETTINGS_THEMES_PATH
 from homeassistant_ui_editor.lib.NodeGraphQt import TemplateBaseNode, BaseNode
 from homeassistant_ui_editor.settings import HomeAssistantUIEditorSettings
+from homeassistant_ui_editor.theme_manager import ThemeManager
+
+from ...lib.NodeGraphQt.constants import (
+    NODE_PROP,
+    NODE_PROP_QLABEL,
+    NODE_PROP_QLINEEDIT,
+    NODE_PROP_QCHECKBOX,
+    NODE_PROP_COLORPICKER,
+)
+
+PROPERTIES_BY_TYPE = {
+    "str": NODE_PROP_QLINEEDIT,
+    "in": NODE_PROP_QLINEEDIT,
+    "bool": NODE_PROP_QCHECKBOX,
+}
 
 SETTINGS = HomeAssistantUIEditorSettings()
 
@@ -25,7 +40,10 @@ class _HomeAssistantBaseNode(TemplateBaseNode):
 
     @staticmethod
     def get_template_file(template):
-        return os.path.join(SETTINGS.get(SETTINGS_THEMES_PATH), *template.split("."))
+        theme_manager = ThemeManager()
+        theme_identifier, template_type, template_name = template.split(".")
+        theme = theme_manager.load(theme_identifier)
+        return theme.get_template(template_type, template_name)
 
 
 class HomeAssistantVisualNode(_HomeAssistantBaseNode):
@@ -113,6 +131,8 @@ class HomeAssistantVisualNode(_HomeAssistantBaseNode):
     def _create_properties(self):
         for property, property_values in self.node_properties.items():
             self.add_input(name=property, color=(233, 45, 56), **property_values)
+            type_ = PROPERTIES_BY_TYPE.get(property_values.get("limited_type", "str"))
+            self.create_property(property, property_values.get("default", ""), widget_type=type_)
 
     def _create_inputs(self):
         for input, input_values in self.node_inputs.items():
@@ -124,6 +144,8 @@ class HomeAssistantVisualNode(_HomeAssistantBaseNode):
 
     def get_context(self):
         context = {"cards": []}
+        for property_name in self.node_properties:
+            context[property_name] = self.get_property(property_name)
         for port, nodes in self.connected_input_nodes().items():
             if not nodes:
                 continue
@@ -134,6 +156,7 @@ class HomeAssistantVisualNode(_HomeAssistantBaseNode):
                     context["cards"].append(node.run())
                 else:
                     continue
+
         return context
 
     def run(self):

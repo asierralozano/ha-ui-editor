@@ -825,7 +825,7 @@ class BaseNode(NodeObject):
 
     def add_input(self, name='input', multi_input=False, display_name=True,
                   color=None, data_type='NoneType', locked=False,
-                  painter_func=None, limited_type=None, optional=True):
+                  painter_func=None, limited_type=None, optional=True, **kwargs):
         """
         Add input :class:`Port` to node.
 
