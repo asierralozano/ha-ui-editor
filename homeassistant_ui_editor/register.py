@@ -29,10 +29,10 @@ def register(graph: NodeGraph):
         pass
 
     # Types
-    graph.register_node(StringNode)
-    graph.register_node(LongStringNode)
-    graph.register_node(IntNode)
-    graph.register_node(BoolNode)
+    # graph.register_node(StringNode)
+    # graph.register_node(LongStringNode)
+    # graph.register_node(IntNode)
+    # graph.register_node(BoolNode)
     # graph.register_node(SVGIconsNode)
 
     # Utility
